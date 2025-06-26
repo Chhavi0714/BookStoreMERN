@@ -36,7 +36,7 @@ const ShowBook = () => {
             {/* Image Block (on the right) */}
             <div className="w-64 h-80 rounded-lg overflow-hidden border border-gray-300 shadow">
               <img
-                src={`http://localhost:3000${book.image}`}
+                src={`https://bookstoremern-1.onrender.com/books${book.image}`}
                 alt="Book cover"
                 className="w-full h-full object-cover"
               />
