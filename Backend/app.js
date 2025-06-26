@@ -7,6 +7,8 @@ import booksRoute from "./Routes/booksRoute.js";
 import cors from 'cors';
 const app = express();
 app.use (express.json());
+app.use('/uploads', express.static('uploads'));
+
 connectDB();
 app.use(cors({ origin: 'http://localhost:5173' }));
 

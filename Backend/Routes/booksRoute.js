@@ -1,8 +1,20 @@
 import express from "express";
 import { Book } from "../models/bookModel.js";
-
+import multer from 'multer';
+import path from 'path';
 const router = express.Router();
-router.post('/', async (req, res)=>{
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); 
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+  }
+});
+const upload = multer({ storage: storage });
+router.post('/',upload.single('image'), async(req, res)=>{
   try {
     if(
       !req.body.title||
@@ -17,6 +29,7 @@ router.post('/', async (req, res)=>{
       title: req.body.title,
       author: req.body.author,
       publishYear: req.body.publishYear,
+      image: req.file ? `/uploads/${req.file.filename}` : '',
     };
     const book = await Book.create(newBook);
      return res.status(201).json(book);
@@ -90,5 +103,6 @@ router.delete('/:id',async(req,res)=>{
      res.status(500).send({message: error.message});
   }
 })
+
 
 export default router;

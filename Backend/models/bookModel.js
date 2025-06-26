@@ -13,6 +13,9 @@ const BookSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    image: {
+    type: String,    
+  },
   }, 
     {
       timestamps:true,
